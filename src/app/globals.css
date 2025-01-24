@@ -19,3 +19,14 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+legend {
+  color: hsla(0, 0%, 0%, 0.6);
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* fieldset div > label {
+  display:block;
+  margin-bottom: 8px;
+} */
