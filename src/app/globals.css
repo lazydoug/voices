@@ -26,7 +26,45 @@ legend {
   font-weight: bold;
 }
 
-/* fieldset div > label {
-  display:block;
-  margin-bottom: 8px;
-} */
+/* Hide default radio button */
+.custom-radio {
+  appearance: none; /* Removes default styling */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  position: relative;
+  width: 16px;
+  height: 16px;
+  border: 2px solid gray;
+  border-radius: 50%;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Change the border and background on hover */
+.custom-radio:hover {
+  border-color: #fdba74;
+}
+
+/* Styling the checked state */
+.custom-radio:checked {
+  border-color: #fdba74; /* Orange border */
+  background-color: white; /* Orange fill */
+}
+
+/* Add a dot in the center when checked */
+.custom-radio:checked::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  background-color: #fdba74;
+  border-radius: 50%;
+}
+
+textarea {
+  scrollbar-width: thin; /* Thin scrollbar */
+}

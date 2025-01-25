@@ -1,4 +1,4 @@
-'use client'
+import LongTextInput from '@/components/LongTextInput'
 
 export default function Home() {
   return (
@@ -27,184 +27,216 @@ export default function Home() {
 
           <hr className='-mx-6' />
 
-          <div className='text-[#d93025]'>* Indicates required question</div>
+          <div className='text-sm text-[#d93025]'>All fields are required</div>
         </div>
 
-        <form action='' className='mt-3 space-y-3'>
+        <form action='' className='mt-3 space-y-6'>
           {/* Nominee Information */}
-          <fieldset className='space-y-7 rounded-lg bg-white px-6 py-4'>
+          <fieldset className='space-y-6 rounded-lg border-l-4 border-l-white bg-white px-6 pb-8 transition-all duration-300 focus-within:border-l-orange-300/50'>
             <legend>Nominee Information</legend>
             <div>
-              <label className='mb-3 block text-black/80' htmlFor='nomineeName'>
+              <label
+                htmlFor='nomineeName'
+                className='text-sm font-medium text-black/80'
+              >
                 Full Name of Nominee (Individual/Organization)
               </label>
-              <input  
-                className='box-border w-full border-b text-[14px] transition-colors duration-300 focus:border-b-[3px] focus:border-b-orange-300 focus:pb-[2px] focus:outline-none'
+              <input
                 type='text'
                 name='nomineeName'
                 id='nomineeName'
+                required
+                className='mt-1 block w-full border-b py-1 transition-colors duration-300 focus:border-b-[3px] focus:border-b-orange-300 focus:outline-none'
               />
             </div>
 
             <div>
-              <label className='mb-3 block text-black/80'>
+              <label className='text-sm font-medium text-black/80'>
                 Type of Nominee
               </label>
-              <div className='flex gap-6'>
-                <div className='space-x-2'>
-                  <input type='radio' name='nomType' id='indie' />
+
+              <div className='mt-1 flex gap-4 py-1'>
+                <div className='flex items-center gap-2'>
+                  <input
+                    type='radio'
+                    name='nomineeType'
+                    id='indie'
+                    value='individual'
+                    required
+                    className='custom-radio'
+                  />
                   <label htmlFor='indie'>Individual</label>
                 </div>
 
-                <div className='space-x-2'>
-                  <input type='radio' name='nomType' id='org' />
+                <div className='flex items-center gap-2'>
+                  <input
+                    type='radio'
+                    name='nomineeType'
+                    id='org'
+                    value='organization'
+                    required
+                    className='custom-radio'
+                  />
                   <label htmlFor='org'>Organization</label>
                 </div>
               </div>
             </div>
 
             <div>
-              <label htmlFor='nomPhone'>Nominee Phone</label>
+              <label
+                htmlFor='nomPhone'
+                className='text-sm font-medium text-black/80'
+              >
+                Nominee Phone
+              </label>
               <input
-                className='box-border block w-full border-b transition-colors duration-300 focus:border-b-[3px] focus:border-b-orange-300 focus:pb-[2px] focus:outline-none'
                 type='tel'
                 name='nomineePhone'
                 id='nomPhone'
+                required
+                className='mt-1 block w-full border-b py-1 transition-colors duration-300 focus:border-b-[3px] focus:border-b-orange-300 focus:outline-none'
               />
             </div>
 
             <div>
-              <label htmlFor='nomEmail'>Nominee Email</label>
+              <label
+                htmlFor='nomEmail'
+                className='text-sm font-medium text-black/80'
+              >
+                Nominee Email
+              </label>
               <input
-                className='box-border block w-full border-b transition-colors duration-300 focus:border-b-[3px] focus:border-b-orange-300 focus:pb-[2px] focus:outline-none'
                 type='email'
                 name='nomineeEmail'
                 id='nomEmail'
+                required
+                className='mt-1 block w-full border-b py-1 transition-colors duration-300 focus:border-b-[3px] focus:border-b-orange-300 focus:outline-none'
               />
             </div>
 
             <div>
-              <label htmlFor='nomAddress'>Nominee Address</label>
+              <label
+                htmlFor='nomAddress'
+                className='text-sm font-medium text-black/80'
+              >
+                Nominee Address
+              </label>
               <input
-                className='box-border block w-full border-b transition-colors duration-300 focus:border-b-[3px] focus:border-b-orange-300 focus:pb-[2px] focus:outline-none'
                 type='text'
                 name='nomineeAddress'
                 id='nomAddress'
+                required
+                className='mt-1 block w-full border-b py-1 transition-colors duration-300 focus:border-b-[3px] focus:border-b-orange-300 focus:outline-none'
               />
             </div>
           </fieldset>
 
           {/* Nominator Information */}
-          <fieldset className='space-y-6 rounded-lg bg-white px-6 py-4'>
+          <fieldset className='space-y-6 rounded-lg border-l-4 border-l-white bg-white px-6 pb-8 transition-all duration-300 focus-within:border-l-orange-300/50'>
             <legend>Nominator Information</legend>
 
             <div>
-              <label htmlFor='nominatorName'>Full Name</label>
+              <label
+                htmlFor='nominatorName'
+                className='text-sm font-medium text-black/80'
+              >
+                Full Name
+              </label>
               <input
-                className='textmt-2 box-border block w-full border-b transition-colors duration-300 focus:border-b-[3px] focus:border-b-orange-300 focus:pb-[2px] focus:outline-none'
                 type='text'
                 name='nominatorName'
                 id='nominatorName'
+                required
+                className='mt-1 block w-full border-b py-1 transition-colors duration-300 focus:border-b-[3px] focus:border-b-orange-300 focus:outline-none'
               />
             </div>
 
             <div>
-              <label htmlFor='rel'>Relationship with Nominee</label>
+              <label
+                htmlFor='rel'
+                className='text-sm font-medium text-black/80'
+              >
+                Relationship with Nominee
+              </label>
               <input
-                className='box-border block w-full border-b transition-colors duration-300 focus:border-b-[3px] focus:border-b-orange-300 focus:pb-[2px] focus:outline-none'
                 type='text'
                 name='relationship'
                 id='rel'
+                required
+                className='mt-1 block w-full border-b py-1 transition-colors duration-300 focus:border-b-[3px] focus:border-b-orange-300 focus:outline-none'
               />
             </div>
 
             <div>
-              <label htmlFor='nominatorPhone'>Nominator Phone</label>
+              <label
+                htmlFor='nominatorPhone'
+                className='text-sm font-medium text-black/80'
+              >
+                Nominator Phone
+              </label>
               <input
-                className='box-border block w-full border-b transition-colors duration-300 focus:border-b-[3px] focus:border-b-orange-300 focus:pb-[2px] focus:outline-none'
                 type='tel'
                 name='nominatorPhone'
                 id='nominatorPhone'
+                required
+                className='mt-1 block w-full border-b py-1 transition-colors duration-300 focus:border-b-[3px] focus:border-b-orange-300 focus:outline-none'
               />
             </div>
 
             <div>
-              <label htmlFor='nominatorEmail'>Nominator Email</label>
+              <label
+                htmlFor='nominatorEmail'
+                className='text-sm font-medium text-black/80'
+              >
+                Nominator Email
+              </label>
               <input
-                className='box-border block w-full border-b transition-colors duration-300 focus:border-b-[3px] focus:border-b-orange-300 focus:pb-[2px] focus:outline-none'
                 type='email'
                 name='nominatorEmail'
                 id='nominatorEmail'
+                required
+                className='mt-1 block w-full border-b py-1 transition-colors duration-300 focus:border-b-[3px] focus:border-b-orange-300 focus:outline-none'
               />
             </div>
           </fieldset>
 
           {/* Nomination Details */}
-          <fieldset className='space-y-6 rounded-lg bg-white px-6 py-4'>
+          <fieldset className='space-y-6 rounded-lg border-l-4 border-l-white bg-white px-6 pb-8 transition-all duration-300 focus-within:border-l-orange-300/50'>
             <legend>Nomination Details</legend>
 
-            <div>
-              <label htmlFor='nomsStory'>
-                Please describe the nominee&apos;s story of perseverance and
+            <LongTextInput
+              label="Please describe the nominee's story of perseverance and
                 strength: (Provide details on the adversity they faced, how they
-                overcame challenges, and any notable achievements or impact.)
-              </label>
-              <textarea
-                className='mt-7 box-border block max-h-52 w-full resize-none border-b transition-colors duration-300 focus:border-b-[3px] focus:border-b-orange-300 focus:pb-[2px] focus:outline-none'
-                name='nomsStory'
-                id='nomStory'
-                rows={5}
-                spellCheck='true'
-                onInput={(e) => {
-                  e.target.style.height = 'auto' // Reset height to calculate the new height
-                  e.target.style.height = `${e.target.scrollHeight}px` // Set height to match content
-                }}
-              ></textarea>
-            </div>
+                overcame challenges, and any notable achievements or impact.)"
+              name='nomineeStroy'
+              id='nomineeStroy'
+            />
 
-            <div>
-              <label htmlFor='nomsResilience'>
-                How has the nominee demonstrated resilience and determination in
+            <LongTextInput
+              label='How has the nominee demonstrated resilience and determination in
                 the face of adversity? (Share examples or specific moments that
-                highlight their courage.)
-              </label>
-              <textarea
-                className='mt-7 box-border block max-h-52 w-full resize-none border-b transition-colors duration-300 focus:border-b-[3px] focus:border-b-orange-300 focus:pb-[2px] focus:outline-none'
-                name='nomsResilience'
-                id='nomsResilience'
-                rows={5}
-                spellCheck='true'
-                onInput={(e) => {
-                  e.target.style.height = 'auto' // Reset height to calculate the new height
-                  e.target.style.height = `${e.target.scrollHeight}px` // Set height to match content
-                }}
-              ></textarea>
-            </div>
+                highlight their courage.)'
+              name='nomineeResilience'
+              id='nomineeResilience'
+            />
 
-            <div>
-              <label htmlFor='nomsImpact'>
-                What positive change or impact has the nominee made in their
+            <LongTextInput
+              label=" What positive change or impact has the nominee made in their
                 community, industry, or personal life? (Include any awards,
-                recognition, or influence they&apos;ve had in inspiring others.)
-              </label>
-              <textarea
-                className='mt-7 box-border block max-h-52 w-full resize-none border-b transition-colors duration-300 focus:border-b-[3px] focus:border-b-orange-300 focus:pb-[2px] focus:outline-none'
-                name='nomsImpact'
-                id='nomsImpact'
-                rows={5}
-                spellCheck='true'
-                onInput={(e) => {
-                  e.target.style.height = 'auto' // Reset height to calculate the new height
-                  e.target.style.height = `${e.target.scrollHeight}px` // Set height to match content
-                }}
-              ></textarea>
-            </div>
+                recognition, or influence they've had in inspiring others.)"
+              name='nomineeImpact'
+              id='nomineeImpact'
+            />
 
             <div>
-              <label htmlFor='documents'>
+              <label
+                htmlFor='documents'
+                className='text-sm font-medium text-black/80'
+              >
                 Supporting Documents: (Attach any relevant articles, photos,
                 videos, or references that support the nominee&apos;s story.)
               </label>
+
               <input
                 className='mx-auto mt-7 block'
                 type='file'
@@ -213,6 +245,7 @@ export default function Home() {
               />
             </div>
           </fieldset>
+
           <div className='pb-2 text-center text-[12px] text-black/60'>
             <div>
               By submitting this form, I confirm that the information provided
@@ -221,13 +254,13 @@ export default function Home() {
 
             <div className='mt-3 flex justify-between'>
               <button
-                className='rounded-md bg-orange-500 px-6 py-2 text-sm font-medium text-white'
+                className='rounded-md bg-orange-600 px-6 py-2 text-sm font-medium text-white hover:bg-orange-500'
                 type='submit'
               >
                 Submit
               </button>
               <button
-                className='rounded-md text-sm font-medium text-orange-700 hover:bg-orange-200/50'
+                className='rounded-md px-2 text-sm font-medium text-orange-700 hover:bg-orange-200/50'
                 type='reset'
               >
                 Clear form
