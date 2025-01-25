@@ -65,7 +65,9 @@ export default function Home() {
                     required
                     className='custom-radio'
                   />
-                  <label htmlFor='indie'>Individual</label>
+                  <label htmlFor='indie' className='cursor-pointer'>
+                    Individual
+                  </label>
                 </div>
 
                 <div className='flex items-center gap-2'>
@@ -77,7 +79,9 @@ export default function Home() {
                     required
                     className='custom-radio'
                   />
-                  <label htmlFor='org'>Organization</label>
+                  <label htmlFor='org' className='cursor-pointer'>
+                    Organization
+                  </label>
                 </div>
               </div>
             </div>
