@@ -1,9 +1,17 @@
+'use client'
+
+import { Formik, Form } from 'formik'
+
+import { formAction } from '@/api/form-action'
+import { validationSchema } from '@/helpers/validation-schema'
+
+import FormField from '@/components/FormField'
 import LongTextInput from '@/components/LongTextInput'
 
 export default function Home() {
   return (
-    <div className='mx-auto mb-6 mt-3 w-[640px] max-w-[90vw]'>
-      <div className='h-40 max-h-[22.5vw] rounded-lg bg-[url("/img/hero-img.jpg")] bg-contain bg-center'></div>
+    <div className='mx-auto mb-6 mt-3 w-[640px] min-w-96 max-w-[90vw]'>
+      <div className='h-40 max-h-[22.5vw] rounded-lg bg-[url("/img/hero-img.jpg")] bg-cover bg-center'></div>
       <main>
         <div className='mt-3 space-y-3 rounded-lg border-t-[10px] border-orange-300 bg-white px-6 py-4 text-black'>
           <h1 className='text-3xl font-bold'>
@@ -30,248 +38,334 @@ export default function Home() {
           <div className='text-sm text-[#d93025]'>All fields are required</div>
         </div>
 
-        <form action='' className='mt-3 space-y-6'>
-          {/* Nominee Information */}
-          <fieldset className='space-y-6 rounded-lg border-l-4 border-l-white bg-white px-6 pb-8 transition-all duration-300 focus-within:border-l-orange-300/50'>
-            <legend>Nominee Information</legend>
-            <div>
-              <label
-                htmlFor='nomineeName'
-                className='text-sm font-medium text-black/80'
-              >
-                Full Name of Nominee (Individual/Organization)
-              </label>
-              <input
-                type='text'
-                name='nomineeName'
-                id='nomineeName'
-                required
-                className='mt-1 block w-full border-b py-1 transition-colors duration-300 focus:border-b-[3px] focus:border-b-orange-300 focus:outline-none'
-              />
-            </div>
+        <Formik
+          initialValues={{
+            nomineeName: '',
+            nomineeType: '',
+            nomineePhone: '',
+            nomineeEmail: '',
+            nomineeAddress: '',
+            nominatorName: '',
+            rel: '',
+            nominatorPhone: '',
+            nominatorEmail: '',
+            nomineeStory: '',
+            nomineeResilience: '',
+            nomineeImpact: '',
+          }}
+          validationSchema={validationSchema}
+          onSubmit={async (values, { setSubmitting, resetForm }) => {
+            // Convert form values to FormData
+            const formData = new FormData()
 
-            <div>
-              <label className='text-sm font-medium text-black/80'>
-                Type of Nominee
-              </label>
+            // Append other form fields
+            Object.entries(values).forEach(([key, value]) => {
+              if (key !== 'documents') {
+                formData.append(key, value)
+              }
+            })
 
-              <div className='mt-1 flex gap-4 py-1'>
-                <div className='flex items-center gap-2'>
-                  <input
-                    type='radio'
-                    name='nomineeType'
-                    id='indie'
-                    value='individual'
-                    required
-                    className='custom-radio'
-                  />
-                  <label htmlFor='indie' className='cursor-pointer'>
-                    Individual
+            // Append uploaded files (if any)
+
+            if (values.documents) {
+              Array.from(values.documents).forEach((file, index) => {
+                formData.append('documents', file)
+              })
+            }
+
+            try {
+              const response = await formAction(formData) // Send form data to server
+
+              if (!response.success) {
+                console.log('Error:', response.error)
+              } else {
+                // resetForm()
+                console.log('Success', response.message)
+              }
+            } catch (error) {
+              console.error('Submission error:', error)
+            }
+
+            setSubmitting(false)
+          }}
+        >
+          {({
+            isSubmitting,
+            setFieldValue,
+            handleChange,
+            handleBlur,
+            values,
+            errors,
+            touched,
+          }) => (
+            <Form className='mt-3 space-y-6'>
+              {/* Nominee Information */}
+              <fieldset className='space-y-6 rounded-lg border-l-4 border-l-white bg-white px-6 pb-8 transition-all duration-300 focus-within:border-l-orange-300/50'>
+                <legend>Nominee Information</legend>
+                <FormField
+                  label='Full Name (Individual/Organization)'
+                  type='text'
+                  name='nomineeName'
+                  required
+                  value={values.nomineeName}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={
+                    errors.nomineeName && touched.nomineeName
+                      ? errors.nomineeName
+                      : ''
+                  }
+                />
+
+                <div>
+                  <label className='text-sm font-medium text-black/80'>
+                    Type of Nominee
                   </label>
+                  <div className='mt-1 flex gap-4 py-1'>
+                    {['Individual', 'Organization'].map((type) => (
+                      <label
+                        key={type}
+                        className='flex cursor-pointer items-center gap-2'
+                      >
+                        <input
+                          type='radio'
+                          name='nomineeType'
+                          value={type}
+                          required
+                          checked={values.nomineeType === type}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          error={
+                            errors.nomineeType && touched.nomineeType
+                              ? errors.nomineeType
+                              : ''
+                          }
+                          className='custom-radio'
+                        />
+                        {type}
+                      </label>
+                    ))}
+                  </div>
+                  {errors.nomineeType && touched.nomineeType && (
+                    <div className='text-sm text-red-500'>
+                      {errors.nomineeType}
+                    </div>
+                  )}
                 </div>
 
-                <div className='flex items-center gap-2'>
-                  <input
-                    type='radio'
-                    name='nomineeType'
-                    id='org'
-                    value='organization'
-                    required
-                    className='custom-radio'
-                  />
-                  <label htmlFor='org' className='cursor-pointer'>
-                    Organization
-                  </label>
-                </div>
-              </div>
-            </div>
+                <FormField
+                  label='Phone'
+                  type='tel'
+                  name='nomineePhone'
+                  required
+                  value={values.nomineePhone}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={
+                    errors.nomineePhone && touched.nomineePhone
+                      ? errors.nomineePhone
+                      : ''
+                  }
+                />
 
-            <div>
-              <label
-                htmlFor='nomPhone'
-                className='text-sm font-medium text-black/80'
-              >
-                Nominee Phone
-              </label>
-              <input
-                type='tel'
-                name='nomineePhone'
-                id='nomPhone'
-                required
-                className='mt-1 block w-full border-b py-1 transition-colors duration-300 focus:border-b-[3px] focus:border-b-orange-300 focus:outline-none'
-              />
-            </div>
+                <FormField
+                  label='Email'
+                  type='email'
+                  name='nomineeEmail'
+                  required
+                  value={values.nomineeEmail}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={
+                    errors.nomineeEmail && touched.nomineeEmail
+                      ? errors.nomineeEmail
+                      : ''
+                  }
+                />
 
-            <div>
-              <label
-                htmlFor='nomEmail'
-                className='text-sm font-medium text-black/80'
-              >
-                Nominee Email
-              </label>
-              <input
-                type='email'
-                name='nomineeEmail'
-                id='nomEmail'
-                required
-                className='mt-1 block w-full border-b py-1 transition-colors duration-300 focus:border-b-[3px] focus:border-b-orange-300 focus:outline-none'
-              />
-            </div>
+                <FormField
+                  label='Address'
+                  type='text'
+                  name='nomineeAddress'
+                  required
+                  value={values.nomineeAddress}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={
+                    errors.nomineeAddress && touched.nomineeAddress
+                      ? errors.nomineeAddress
+                      : ''
+                  }
+                />
+              </fieldset>
 
-            <div>
-              <label
-                htmlFor='nomAddress'
-                className='text-sm font-medium text-black/80'
-              >
-                Nominee Address
-              </label>
-              <input
-                type='text'
-                name='nomineeAddress'
-                id='nomAddress'
-                required
-                className='mt-1 block w-full border-b py-1 transition-colors duration-300 focus:border-b-[3px] focus:border-b-orange-300 focus:outline-none'
-              />
-            </div>
-          </fieldset>
+              {/* Nominator Information */}
+              <fieldset className='space-y-6 rounded-lg border-l-4 border-l-white bg-white px-6 pb-8 transition-all duration-300 focus-within:border-l-orange-300/50'>
+                <legend>Nominator Information</legend>
 
-          {/* Nominator Information */}
-          <fieldset className='space-y-6 rounded-lg border-l-4 border-l-white bg-white px-6 pb-8 transition-all duration-300 focus-within:border-l-orange-300/50'>
-            <legend>Nominator Information</legend>
+                <FormField
+                  label='Full Name'
+                  type='text'
+                  name='nominatorName'
+                  required
+                  value={values.nominatorName}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={
+                    errors.nominatorName && touched.nominatorName
+                      ? errors.nominatorName
+                      : ''
+                  }
+                />
+                <FormField
+                  label='Relationship with Nominee'
+                  type='text'
+                  name='rel'
+                  required
+                  value={values.rel}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={errors.rel && touched.rel ? errors.rel : ''}
+                />
+                <FormField
+                  label='Phone'
+                  type='tel'
+                  name='nominatorPhone'
+                  required
+                  value={values.nominatorPhone}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={
+                    errors.nominatorPhone && touched.nominatorPhone
+                      ? errors.nominatorPhone
+                      : ''
+                  }
+                />
+                <FormField
+                  label='Email'
+                  type='email'
+                  name='nominatorEmail'
+                  required
+                  value={values.nominatorEmail}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={
+                    errors.nominatorEmail && touched.nominatorEmail
+                      ? errors.nominatorEmail
+                      : ''
+                  }
+                />
+              </fieldset>
 
-            <div>
-              <label
-                htmlFor='nominatorName'
-                className='text-sm font-medium text-black/80'
-              >
-                Full Name
-              </label>
-              <input
-                type='text'
-                name='nominatorName'
-                id='nominatorName'
-                required
-                className='mt-1 block w-full border-b py-1 transition-colors duration-300 focus:border-b-[3px] focus:border-b-orange-300 focus:outline-none'
-              />
-            </div>
+              {/* Nomination Details */}
+              <fieldset className='space-y-6 rounded-lg border-l-4 border-l-white bg-white px-6 pb-8 transition-all duration-300 focus-within:border-l-orange-300/50'>
+                <legend>Nomination Details</legend>
 
-            <div>
-              <label
-                htmlFor='rel'
-                className='text-sm font-medium text-black/80'
-              >
-                Relationship with Nominee
-              </label>
-              <input
-                type='text'
-                name='relationship'
-                id='rel'
-                required
-                className='mt-1 block w-full border-b py-1 transition-colors duration-300 focus:border-b-[3px] focus:border-b-orange-300 focus:outline-none'
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor='nominatorPhone'
-                className='text-sm font-medium text-black/80'
-              >
-                Nominator Phone
-              </label>
-              <input
-                type='tel'
-                name='nominatorPhone'
-                id='nominatorPhone'
-                required
-                className='mt-1 block w-full border-b py-1 transition-colors duration-300 focus:border-b-[3px] focus:border-b-orange-300 focus:outline-none'
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor='nominatorEmail'
-                className='text-sm font-medium text-black/80'
-              >
-                Nominator Email
-              </label>
-              <input
-                type='email'
-                name='nominatorEmail'
-                id='nominatorEmail'
-                required
-                className='mt-1 block w-full border-b py-1 transition-colors duration-300 focus:border-b-[3px] focus:border-b-orange-300 focus:outline-none'
-              />
-            </div>
-          </fieldset>
-
-          {/* Nomination Details */}
-          <fieldset className='space-y-6 rounded-lg border-l-4 border-l-white bg-white px-6 pb-8 transition-all duration-300 focus-within:border-l-orange-300/50'>
-            <legend>Nomination Details</legend>
-
-            <LongTextInput
-              label="Please describe the nominee's story of perseverance and
+                <LongTextInput
+                  label="Please describe the nominee's story of perseverance and
                 strength: (Provide details on the adversity they faced, how they
                 overcame challenges, and any notable achievements or impact.)"
-              name='nomineeStroy'
-              id='nomineeStroy'
-            />
+                  name='nomineeStory'
+                  value={values.nomineeStory}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={
+                    errors.nomineeStory && touched.nomineeStory
+                      ? errors.nomineeStory
+                      : ''
+                  }
+                />
 
-            <LongTextInput
-              label='How has the nominee demonstrated resilience and determination in
+                <LongTextInput
+                  label='How has the nominee demonstrated resilience and determination in
                 the face of adversity? (Share examples or specific moments that
                 highlight their courage.)'
-              name='nomineeResilience'
-              id='nomineeResilience'
-            />
+                  name='nomineeResilience'
+                  value={values.nomineeResilience}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={
+                    errors.nomineeResilience && touched.nomineeResilience
+                      ? errors.nomineeResilience
+                      : ''
+                  }
+                />
 
-            <LongTextInput
-              label=" What positive change or impact has the nominee made in their
+                <LongTextInput
+                  label=" What positive change or impact has the nominee made in their
                 community, industry, or personal life? (Include any awards,
                 recognition, or influence they've had in inspiring others.)"
-              name='nomineeImpact'
-              id='nomineeImpact'
-            />
+                  name='nomineeImpact'
+                  value={values.nomineeImpact}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={
+                    errors.nomineeImpact && touched.nomineeImpact
+                      ? errors.nomineeImpact
+                      : ''
+                  }
+                />
 
-            <div>
-              <label
-                htmlFor='documents'
-                className='text-sm font-medium text-black/80'
-              >
-                Supporting Documents: (Attach any relevant articles, photos,
-                videos, or references that support the nominee&apos;s story.)
-              </label>
+                {/* //TODO: File upload */}
+                <div>
+                  <label
+                    htmlFor='documents'
+                    className='text-sm font-medium text-black/80'
+                  >
+                    Supporting Documents: (Attach any relevant articles, photos,
+                    videos, or references that support the nominee&apos;s
+                    story.)
+                  </label>
 
-              <input
-                className='mx-auto mt-7 block'
-                type='file'
-                name='documents'
-                id='documents'
-              />
-            </div>
-          </fieldset>
+                  <input
+                    className='mx-auto mt-7 block'
+                    type='file'
+                    id='documents'
+                    name='documents'
+                    required
+                    multiple
+                    accept='.pdf,.doc,.docx,.jpg,.jpeg,.png,.gif,.mp4,.mov,.avi,.mkv,.webm'
+                    onChange={(event) => {
+                      setFieldValue('documents', event.currentTarget.files) // Store files in Formik state
+                    }}
+                    onBlur={handleBlur}
+                  />
 
-          <div className='pb-2 text-center text-[12px] text-black/60'>
-            <div>
-              By submitting this form, I confirm that the information provided
-              is accurate and complete to the best of my knowledge.
-            </div>
+                  {errors.documents && touched.documents && (
+                    <p className='mt-1 text-xs text-[#d93025]'>
+                      {errors.documents}
+                    </p>
+                  )}
+                </div>
+              </fieldset>
 
-            <div className='mt-3 flex justify-between'>
-              <button
-                className='rounded-md bg-orange-600 px-6 py-2 text-sm font-medium text-white hover:bg-orange-500'
-                type='submit'
-              >
-                Submit
-              </button>
-              <button
-                className='rounded-md px-2 text-sm font-medium text-orange-700 hover:bg-orange-200/50'
-                type='reset'
-              >
-                Clear form
-              </button>
-            </div>
-          </div>
-        </form>
+              <div className='pb-2 text-center text-[12px] text-black/60'>
+                <div>
+                  By submitting this form, I confirm that the information
+                  provided is accurate and complete to the best of my knowledge.
+                </div>
+
+                <div className='mt-3 flex justify-between'>
+                  <button
+                    type='submit'
+                    disabled={isSubmitting}
+                    className='rounded-md bg-orange-600 px-6 py-2 text-sm text-white hover:bg-orange-500'
+                  >
+                    {isSubmitting ? 'Submitting...' : 'Submit'}
+                  </button>
+
+                  <button
+                    type='reset'
+                    disabled={isSubmitting}
+                    className='rounded-md px-2 text-sm font-medium text-orange-700 hover:bg-orange-200/50'
+                  >
+                    Clear form
+                  </button>
+                </div>
+              </div>
+            </Form>
+          )}
+        </Formik>
       </main>
 
       <div className='py-4 text-center text-[12px] text-black/60'>
