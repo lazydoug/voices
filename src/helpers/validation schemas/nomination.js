@@ -17,7 +17,7 @@ const SUPPORTED_FORMATS = [
 ]
 
 export const validationSchema = Yup.object({
-  nomineeName: Yup.string().min(5, 'Too Short!').required('Required'),
+  nomineeName: Yup.string().min(5, 'Name is too short').required('Required'),
   nomineeType: Yup.string()
     .required('Required')
     .oneOf(['Individual', 'Organization']),
@@ -26,7 +26,7 @@ export const validationSchema = Yup.object({
     .required('Required'),
   nomineeEmail: Yup.string().email('Invalid email').required('Required'),
   nomineeAddress: Yup.string().required('Required'),
-  nominatorName: Yup.string().min(5, 'Too Short!').required('Required'),
+  nominatorName: Yup.string().min(5, 'Name is too short').required('Required'),
   rel: Yup.string().required('Required'),
   nominatorPhone: Yup.string()
     .matches(/^\+?\d{10,14}$/, 'Invalid phone number')

@@ -1,17 +1,20 @@
 'use client'
 
+import { useRef, useState } from 'react'
 import { Formik, Form } from 'formik'
 
 import { formAction } from '@/api/form-action'
-import { validationSchema } from '@/helpers/validation-schema'
+import { validationSchema } from '@/helpers/validation schemas/nomination'
 
 import FormField from '@/components/FormField'
 import LongTextInput from '@/components/LongTextInput'
 
 export default function Home() {
+  const [consent, setConsent] = useState(false)
+
   return (
     <div className='mx-auto mb-6 mt-3 w-[640px] min-w-96 max-w-[90vw]'>
-      <div className='h-40 max-h-[22.5vw] rounded-lg bg-[url("/img/hero-img.jpg")] bg-cover bg-center'></div>
+      <div className='h-40 max-h-[22.5vw] rounded-lg bg-[url("/img/the-voice-banner.jpg")] bg-cover bg-center'></div>
       <main>
         <div className='mt-3 space-y-3 rounded-lg border-t-[10px] border-orange-300 bg-white px-6 py-4 text-black'>
           <h1 className='text-3xl font-bold'>
@@ -66,7 +69,6 @@ export default function Home() {
             })
 
             // Append uploaded files (if any)
-
             if (values.documents) {
               Array.from(values.documents).forEach((file, index) => {
                 formData.append('documents', file)
@@ -77,26 +79,27 @@ export default function Home() {
               const response = await formAction(formData) // Send form data to server
 
               if (!response.success) {
-                console.log('Error:', response.error)
+                // TODO: Handle Error
               } else {
-                // resetForm()
-                console.log('Success', response.message)
+                resetForm()
+
+                // TODO: Handle Success
               }
             } catch (error) {
-              console.error('Submission error:', error)
+              // TODO: Handle Error
             }
 
             setSubmitting(false)
           }}
         >
           {({
-            isSubmitting,
-            setFieldValue,
             handleChange,
             handleBlur,
+            setFieldValue,
             values,
             errors,
             touched,
+            isSubmitting,
           }) => (
             <Form className='mt-3 space-y-6'>
               {/* Nominee Information */}
@@ -106,7 +109,6 @@ export default function Home() {
                   label='Full Name (Individual/Organization)'
                   type='text'
                   name='nomineeName'
-                  required
                   value={values.nomineeName}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -125,13 +127,14 @@ export default function Home() {
                     {['Individual', 'Organization'].map((type) => (
                       <label
                         key={type}
+                        htmlFor={type}
                         className='flex cursor-pointer items-center gap-2'
                       >
                         <input
                           type='radio'
                           name='nomineeType'
+                          id={type}
                           value={type}
-                          required
                           checked={values.nomineeType === type}
                           onChange={handleChange}
                           onBlur={handleBlur}
@@ -157,7 +160,6 @@ export default function Home() {
                   label='Phone'
                   type='tel'
                   name='nomineePhone'
-                  required
                   value={values.nomineePhone}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -172,7 +174,6 @@ export default function Home() {
                   label='Email'
                   type='email'
                   name='nomineeEmail'
-                  required
                   value={values.nomineeEmail}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -187,7 +188,6 @@ export default function Home() {
                   label='Address'
                   type='text'
                   name='nomineeAddress'
-                  required
                   value={values.nomineeAddress}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -207,7 +207,6 @@ export default function Home() {
                   label='Full Name'
                   type='text'
                   name='nominatorName'
-                  required
                   value={values.nominatorName}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -221,7 +220,6 @@ export default function Home() {
                   label='Relationship with Nominee'
                   type='text'
                   name='rel'
-                  required
                   value={values.rel}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -231,7 +229,6 @@ export default function Home() {
                   label='Phone'
                   type='tel'
                   name='nominatorPhone'
-                  required
                   value={values.nominatorPhone}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -245,7 +242,6 @@ export default function Home() {
                   label='Email'
                   type='email'
                   name='nominatorEmail'
-                  required
                   value={values.nominatorEmail}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -306,7 +302,6 @@ export default function Home() {
                   }
                 />
 
-                {/* //TODO: File upload */}
                 <div>
                   <label
                     htmlFor='documents'
@@ -322,11 +317,10 @@ export default function Home() {
                     type='file'
                     id='documents'
                     name='documents'
-                    required
                     multiple
                     accept='.pdf,.doc,.docx,.jpg,.jpeg,.png,.gif,.mp4,.mov,.avi,.mkv,.webm'
-                    onChange={(event) => {
-                      setFieldValue('documents', event.currentTarget.files) // Store files in Formik state
+                    onChange={(e) => {
+                      setFieldValue('documents', e.currentTarget.files) // Store files in Formik state
                     }}
                     onBlur={handleBlur}
                   />
@@ -340,16 +334,28 @@ export default function Home() {
               </fieldset>
 
               <div className='pb-2 text-center text-[12px] text-black/60'>
-                <div>
-                  By submitting this form, I confirm that the information
-                  provided is accurate and complete to the best of my knowledge.
+                <div className='flex items-start gap-1'>
+                  <input
+                    className='h-4'
+                    type='checkbox'
+                    name='consent'
+                    id='consent'
+                    value='acknowledged'
+                    checked={consent}
+                    onChange={(e) => setConsent(e.target.checked)}
+                  />
+                  <label htmlFor='consent'>
+                    By submitting this form, I confirm that the information
+                    provided is accurate and complete to the best of my
+                    knowledge.
+                  </label>
                 </div>
 
                 <div className='mt-3 flex justify-between'>
                   <button
                     type='submit'
-                    disabled={isSubmitting}
-                    className='rounded-md bg-orange-600 px-6 py-2 text-sm text-white hover:bg-orange-500'
+                    disabled={!consent || isSubmitting}
+                    className='rounded-md bg-orange-600 px-6 py-2 text-sm text-white hover:bg-orange-500 disabled:bg-gray-400/50'
                   >
                     {isSubmitting ? 'Submitting...' : 'Submit'}
                   </button>
@@ -357,7 +363,7 @@ export default function Home() {
                   <button
                     type='reset'
                     disabled={isSubmitting}
-                    className='rounded-md px-2 text-sm font-medium text-orange-700 hover:bg-orange-200/50'
+                    className='rounded-md px-2 text-sm font-medium text-orange-700 hover:bg-orange-200/50 disabled:text-gray-400/50'
                   >
                     Clear form
                   </button>

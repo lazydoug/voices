@@ -12,8 +12,6 @@ const LongTextInput = ({ label, name, value, onChange, onBlur, error }) => {
         id={name}
         rows={5}
         spellCheck='true'
-        minLength={50}
-        required
         value={value}
         onChange={onChange}
         onBlur={onBlur}

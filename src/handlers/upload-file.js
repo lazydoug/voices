@@ -1,6 +1,6 @@
 import supabase from '@/helpers/supabase-client'
 
-const ALLOWED_MIME_TYPES = [
+const DOC_MIME_TYPES = [
   'application/pdf',
   'application/msword',
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -14,18 +14,18 @@ const ALLOWED_MIME_TYPES = [
   'video/webm',
 ]
 
-export default async function uploadFile(file, nomineeName) {
+export async function uploadVoiceSupportingDocs(file, name) {
   if (!file) return null
 
   // Validate MIME Type
-  if (!ALLOWED_MIME_TYPES.includes(file.type)) {
+  if (!DOC_MIME_TYPES.includes(file.type)) {
     throw new Error(`Unsupported file type: ${file.type}`)
   }
 
-  const filePath = `nominations/${Date.now()}_${nomineeName}_${file.name}` // Unique filename
+  const filePath = `nominations/${Date.now()}_${name}_${file.name}` // Unique filename
 
   const { data, error } = await supabase.storage
-    .from('supporting_documents') // Bucket name
+    .from('thevoice') // Bucket name
     .upload(filePath, file)
 
   if (error) {
@@ -34,7 +34,35 @@ export default async function uploadFile(file, nomineeName) {
 
   // Generate Public URL
   const { data: publicUrlData } = supabase.storage
-    .from('supporting_documents')
+    .from('thevoice')
+    .getPublicUrl(filePath)
+
+  return publicUrlData.publicUrl
+}
+
+export async function uploadModelPhoto(file, name) {
+  const MODEL_MIME_TYPES = ['image/png', 'image/jpg', 'image/jpeg']
+
+  if (!file) return null
+
+  // Validate MIME Type
+  if (!MODEL_MIME_TYPES.includes(file.type)) {
+    throw new Error(`Unsupported file type: ${file.type}`)
+  }
+
+  const filePath = `models/${Date.now()}_${name}_${file.name}` // Unique filename
+
+  const { data, error } = await supabase.storage
+    .from('thevoice') // Bucket name
+    .upload(filePath, file)
+
+  if (error) {
+    return null
+  }
+
+  // Generate Public URL
+  const { data: publicUrlData } = supabase.storage
+    .from('thevoice')
     .getPublicUrl(filePath)
 
   return publicUrlData.publicUrl

@@ -1,7 +1,7 @@
 'use server'
 
 import insertIntoTable from '@/handlers/handle-insert'
-import uploadFile from '@/handlers/upload-file'
+import { uploadVoiceSupportingDocs } from '@/handlers/upload-file'
 
 export async function formAction(formData) {
   const fd = {}
@@ -33,10 +33,10 @@ export async function formAction(formData) {
   if (documentFiles.length > 0) {
     try {
       uploadedUrls = await Promise.all(
-        documentFiles.map((file) => uploadFile(file, nomineeName))
+        documentFiles.map((file) =>
+          uploadVoiceSupportingDocs(file, nomineeName)
+        )
       )
-
-      uploadedUrls = await Promise.all(documentFiles.map(uploadFile)) // Await all uploads
     } catch (error) {
       return {
         success: false,
@@ -72,45 +72,3 @@ export async function formAction(formData) {
     message: 'Your nomination has been received successfully!',
   }
 }
-
-// const schema = Joi.object({
-//   nomineeName: Joi.string().required(),
-//   nomineeType: Joi.string().required().valid('Individual', 'Organization'),
-//   nomineePhone: Joi.string()
-//     .required()
-//     .pattern(new RegExp('^[+][0-9]+([ -]?[0-9]+)*')),
-//   nomineeEmail: Joi.string().email().required(),
-//   nomineeAddress: Joi.string().required(),
-//   nominatorName: Joi.string().required(),
-//   relationship: Joi.string().required(),
-//   nominatorPhone: Joi.string()
-//     .required()
-//     .pattern(new RegExp('^[+][0-9]+([ -]?[0-9]+)*')),
-//   nominatorEmail: Joi.string().email().required(),
-//   nomineeStroy: Joi.string().required().min(50),
-//   nomineeResilience: Joi.string().required().min(50),
-//   nomineeImpact: Joi.string().required().min(50),
-// })
-
-// const { error, value } = schema.validate(data)
-
-// if (error) {
-//   const formattedErrors = error.details.map((err) => {
-//     switch (err.type) {
-//       case 'string.empty':
-//         return `${err.context.label} cannot be empty.`
-//       case 'any.required':
-//         return `${err.context.label} is required.`
-//       case 'string.email':
-//         return `${err.context.label} must be a valid email address.`
-//       case 'string.pattern.base':
-//         return `${err.context.label} must be in international format (e.g., +234...).`
-//       default:
-//         return `Invalid value for ${err.context.label}.`
-//     }
-//   })
-
-//   console.log('error===>    ', formattedErrors)
-
-//   return { success: false, errors: formattedErrors }
-// }

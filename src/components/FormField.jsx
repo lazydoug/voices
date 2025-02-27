@@ -2,6 +2,10 @@ const FormField = ({
   label,
   type,
   name,
+  step,
+  min,
+  max,
+  minLength,
   required,
   value,
   onChange,
@@ -23,6 +27,10 @@ const FormField = ({
         type={type}
         name={name}
         id={name}
+        step={step}
+        min={min}
+        max={max}
+        minLength={minLength}
         required={required}
         value={value}
         onChange={onChange}
