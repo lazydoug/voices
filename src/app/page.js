@@ -102,7 +102,6 @@ export default function Home() {
             isSubmitting,
           }) => (
             <Form className='mt-3 space-y-6'>
-              {/* Nominee Information */}
               <fieldset className='space-y-6 rounded-lg border-l-4 border-l-white bg-white px-6 pb-8 transition-all duration-300 focus-within:border-l-orange-300/50'>
                 <legend>Nominee Information</legend>
                 <FormField
