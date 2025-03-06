@@ -1,4 +1,4 @@
-'use server'
+'use client'
 
 import insertIntoTable from '@/handlers/handle-insert'
 import { uploadVoiceSupportingDocs } from '@/handlers/upload-file'

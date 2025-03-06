@@ -33,13 +33,13 @@ export const validationSchema = Yup.object({
     .required('Required'),
   nominatorEmail: Yup.string().email('Invalid email').required('Required'),
   nomineeStory: Yup.string()
-    .min(50, 'Minimum 50 characters required')
+    .min(50, 'Minimum of 50 characters required')
     .required('Required'),
   nomineeResilience: Yup.string()
-    .min(50, 'Minimum 50 characters required')
+    .min(50, 'Minimum of 50 characters required')
     .required('Required'),
   nomineeImpact: Yup.string()
-    .min(50, 'Minimum 50 characters required')
+    .min(50, 'Minimum of 50 characters required')
     .required('Required'),
   documents: Yup.array()
     .transform((value) => (Array.isArray(value) ? value : Object.values(value)))

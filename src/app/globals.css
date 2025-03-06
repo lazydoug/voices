@@ -21,9 +21,12 @@ body {
 }
 
 legend {
-  color: hsla(0, 0%, 0%, 0.6);
+  color: #0000008e;
   font-size: 24px;
   font-weight: bold;
+  background: #fff;
+  border-radius: 8px 8px 0;
+  padding: 0 12px;
 }
 
 /* Hide default radio button */
@@ -43,13 +46,13 @@ legend {
 
 /* Change the border and background on hover */
 .custom-radio:hover {
-  border-color: #fdba74;
+  border-color: #6f1455;
 }
 
 /* Styling the checked state */
 .custom-radio:checked {
-  border-color: #fdba74; /* Orange border */
-  background-color: white; /* Orange fill */
+  border-color: #6f1455;
+  background-color: white;
 }
 
 /* Add a dot in the center when checked */
@@ -61,7 +64,7 @@ legend {
   transform: translate(-50%, -50%);
   width: 8px;
   height: 8px;
-  background-color: #fdba74;
+  background-color: #6f1455;
   border-radius: 50%;
 }
 

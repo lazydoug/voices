@@ -7,7 +7,7 @@ import FormField from '@/components/FormField'
 import LongTextInput from '@/components/LongTextInput'
 
 import { volunteerValidationSchema } from '@/helpers/validation schemas/volunteer'
-import { volunteerFormAction } from '@/api/volunteer-form-action'
+import { volunteerFormAction } from '@/form-actions/volunteer'
 
 const VolunteerApplicationForm = () => {
   const [consent, setConsent] = useState(false)

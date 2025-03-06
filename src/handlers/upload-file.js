@@ -1,3 +1,5 @@
+'use client'
+
 import supabase from '@/helpers/supabase-client'
 
 const DOC_MIME_TYPES = [

@@ -36,7 +36,7 @@ const FormField = ({
         onChange={onChange}
         onBlur={onBlur}
         error={error}
-        className={`mt-1 block w-full border-b py-1 transition-all duration-300 focus:border-b-[3px] focus:border-b-orange-300 ${error && 'border-b-[#d93025]'} outline-none`}
+        className={`mt-1 block w-full border-b py-1 transition-all duration-300 focus:border-b-[3px] focus:border-b-[#ff85dc]/50 ${error && 'border-b-[#d93025]'} outline-none`}
       />
 
       {error && <p className='mt-1 text-xs text-[#d93025]'>{error}</p>}

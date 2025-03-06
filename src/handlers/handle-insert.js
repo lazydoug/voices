@@ -1,3 +1,5 @@
+'use client'
+
 import supabase from '@/helpers/supabase-client'
 
 export default async function insertIntoTable(tableName, values) {

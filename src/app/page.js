@@ -3,7 +3,7 @@
 import { useRef, useState } from 'react'
 import { Formik, Form } from 'formik'
 
-import { formAction } from '@/api/form-action'
+import { formAction } from '@/form-actions/nomination'
 import { validationSchema } from '@/helpers/validation schemas/nomination'
 
 import FormField from '@/components/FormField'
@@ -16,7 +16,7 @@ export default function Home() {
     <div className='mx-auto mb-6 mt-3 w-[640px] min-w-96 max-w-[90vw]'>
       <div className='h-40 max-h-[22.5vw] rounded-lg bg-[url("/img/the-voice-banner.jpg")] bg-cover bg-center'></div>
       <main>
-        <div className='mt-3 space-y-3 rounded-lg border-t-[10px] border-orange-300 bg-white px-6 py-4 text-black'>
+        <div className='mt-3 space-y-3 rounded-lg border-t-[10px] border-[#ff85dc] bg-white px-6 py-4 text-black'>
           <h1 className='text-3xl font-bold'>
             Nomination for Perseverance & Strength Award
           </h1>
@@ -78,6 +78,11 @@ export default function Home() {
             try {
               const response = await formAction(formData) // Send form data to server
 
+              // const response = await fetch('/api/nomination', {
+              //   method: 'POST',
+              //   body: formData, // Stream the file directly
+              // })
+
               if (!response.success) {
                 // TODO: Handle Error
               } else {
@@ -102,7 +107,7 @@ export default function Home() {
             isSubmitting,
           }) => (
             <Form className='mt-3 space-y-6'>
-              <fieldset className='space-y-6 rounded-lg border-l-4 border-l-white bg-white px-6 pb-8 transition-all duration-300 focus-within:border-l-orange-300/50'>
+              <fieldset className='space-y-6 rounded-lg border-l-4 border-l-white bg-white px-6 pb-8 transition-all duration-300 focus-within:border-l-[#ff85dc]/70'>
                 <legend>Nominee Information</legend>
                 <FormField
                   label='Full Name (Individual/Organization)'
@@ -199,7 +204,7 @@ export default function Home() {
               </fieldset>
 
               {/* Nominator Information */}
-              <fieldset className='space-y-6 rounded-lg border-l-4 border-l-white bg-white px-6 pb-8 transition-all duration-300 focus-within:border-l-orange-300/50'>
+              <fieldset className='space-y-6 rounded-lg border-l-4 border-l-white bg-white px-6 pb-8 transition-all duration-300 focus-within:border-l-[#ff85dc]/70'>
                 <legend>Nominator Information</legend>
 
                 <FormField
@@ -253,7 +258,7 @@ export default function Home() {
               </fieldset>
 
               {/* Nomination Details */}
-              <fieldset className='space-y-6 rounded-lg border-l-4 border-l-white bg-white px-6 pb-8 transition-all duration-300 focus-within:border-l-orange-300/50'>
+              <fieldset className='space-y-6 rounded-lg border-l-4 border-l-white bg-white px-6 pb-8 transition-all duration-300 focus-within:border-l-[#ff85dc]/70'>
                 <legend>Nomination Details</legend>
 
                 <LongTextInput
@@ -343,7 +348,7 @@ export default function Home() {
                     checked={consent}
                     onChange={(e) => setConsent(e.target.checked)}
                   />
-                  <label htmlFor='consent'>
+                  <label htmlFor='consent' className='text-sm text-white'>
                     By submitting this form, I confirm that the information
                     provided is accurate and complete to the best of my
                     knowledge.
@@ -354,7 +359,7 @@ export default function Home() {
                   <button
                     type='submit'
                     disabled={!consent || isSubmitting}
-                    className='rounded-md bg-orange-600 px-6 py-2 text-sm text-white hover:bg-orange-500 disabled:bg-gray-400/50'
+                    className='rounded-md bg-[#6f1455] px-6 py-2 text-sm text-white hover:bg-[#6f1455]/50 disabled:bg-gray-700/40 disabled:text-gray-500'
                   >
                     {isSubmitting ? 'Submitting...' : 'Submit'}
                   </button>
@@ -362,7 +367,7 @@ export default function Home() {
                   <button
                     type='reset'
                     disabled={isSubmitting}
-                    className='rounded-md px-2 text-sm font-medium text-orange-700 hover:bg-orange-200/50 disabled:text-gray-400/50'
+                    className='rounded-md px-2 text-sm font-medium text-[#e763c2] hover:bg-[#43152c] disabled:text-gray-500'
                   >
                     Clear form
                   </button>
@@ -373,13 +378,13 @@ export default function Home() {
         </Formik>
       </main>
 
-      <div className='py-4 text-center text-[12px] text-black/60'>
+      <div className='mb-2 mt-5 text-center text-[12px] text-white/70'>
         Thank you for nominating a hero to be recognized for their perseverance,
         strength, and resilience! 🌟
       </div>
 
       <footer>
-        <div className='text-center text-xl font-bold text-black/50'>
+        <div className='text-center text-xl font-bold text-white/70'>
           Voices
         </div>
       </footer>

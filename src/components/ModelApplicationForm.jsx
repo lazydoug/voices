@@ -7,7 +7,7 @@ import FormField from '@/components/FormField'
 import LongTextInput from '@/components/LongTextInput'
 
 import { modelValidationSchema } from '@/helpers/validation schemas/model'
-import { modelFormAction } from '@/api/model-form-action'
+import { modelFormAction } from '@/form-actions/model'
 
 const ModelApplicationForm = () => {
   const [consent, setConsent] = useState(false)
@@ -377,6 +377,7 @@ const ModelApplicationForm = () => {
                   type='number'
                   name='height'
                   step='0.01'
+                  min={1}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   error={errors.height && touched.height ? errors.height : ''}
