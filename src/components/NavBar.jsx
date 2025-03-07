@@ -32,7 +32,7 @@ const NavBar = () => {
         {/* Desktop Menu */}
         <div className='hidden md:flex md:items-center md:space-x-8'>
           <Link
-            href='/nomination'
+            href='/nominations'
             className='text-md text-secondary hover:text-primary'
           >
             Nominations
