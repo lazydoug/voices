@@ -13,19 +13,19 @@ const VolunteerApplicationForm = () => {
   const [consent, setConsent] = useState(false)
 
   return (
-    <div className='mx-auto mb-6 mt-3 w-[640px] min-w-96 max-w-[90vw]'>
+    <div className='mx-auto mb-6 mt-3 w-[640px] min-w-96 max-w-[90vw] text-black'>
       <div className='h-40 max-h-[22.5vw] rounded-lg bg-[url("/img/volunteer-banner.jpg")] bg-cover bg-center'></div>
       <main>
-        <div className='mt-3 space-y-3 rounded-lg border-t-[10px] border-fuchsia-300 bg-white px-6 py-4 text-black'>
+        <div className='mt-3 space-y-3 rounded-lg border-t-[10px] border-fuchsia-300 bg-white px-6 py-4'>
           <h1 className='text-3xl font-bold'>
-            The Voice Volunteer Application
+            Inspired Voices Volunteer Application
           </h1>
           <p className='text-[14px] text-[#202124]'>
-            Thank you for your interest in volunteering for The Voice event on{' '}
-            <time dateTime='2025-05-18'>May 18, 2025</time>. Volunteers play a
-            vital role in making this event a success, and we appreciate your
-            willingness to contribute. Please complete the application below.
-            Selected volunteers will be contacted with further details.
+            Thank you for your interest in volunteering for the Inspired Voices
+            event on <time dateTime='2025-05-18'>May 18, 2025</time>. Volunteers
+            play a vital role in making this event a success, and we appreciate
+            your willingness to contribute. Please complete the application
+            below. Selected volunteers will be contacted with further details.
           </p>
 
           <hr className='-mx-6' />
@@ -191,7 +191,7 @@ const VolunteerApplicationForm = () => {
                 <legend>Availability</legend>
 
                 <div>
-                  <label className='text-sm font-medium text-black/80'>
+                  <label className='text-sm font-medium'>
                     Are you available on May 18, 2025?
                   </label>
                   <div className='mt-1 flex gap-4 py-1'>
@@ -242,7 +242,7 @@ const VolunteerApplicationForm = () => {
                 />
 
                 <div>
-                  <label className='text-sm font-medium text-black/80'>
+                  <label className='text-sm font-medium'>
                     Are you available for pre-event setup and preparation?
                   </label>
                   <div className='mt-1 flex flex-col gap-4 py-1'>
@@ -286,7 +286,7 @@ const VolunteerApplicationForm = () => {
                 </div>
 
                 <div>
-                  <label className='text-sm font-medium text-black/80'>
+                  <label className='text-sm font-medium'>
                     Are you available for a volunteer orientation prior to the
                     event?
                   </label>
@@ -329,7 +329,7 @@ const VolunteerApplicationForm = () => {
                 </div>
 
                 <div>
-                  <label className='text-sm font-medium text-black/80'>
+                  <label className='text-sm font-medium'>
                     Preferred Volunteer Shift(s)
                   </label>
                   <div className='mt-1 flex flex-col gap-4 py-1'>
@@ -375,7 +375,7 @@ const VolunteerApplicationForm = () => {
                 <legend>Volunteer Roles</legend>
 
                 <div>
-                  <label className='text-sm font-medium text-black/80'>
+                  <label className='text-sm font-medium'>
                     Please select the areas where you would like to help
                   </label>
                   <div className='mt-1 flex flex-col gap-4 py-1'>
@@ -463,7 +463,7 @@ const VolunteerApplicationForm = () => {
                 <legend>Skills & Experience</legend>
 
                 <div>
-                  <label className='text-sm font-medium text-black/80'>
+                  <label className='text-sm font-medium'>
                     Have you volunteered at an event before?
                   </label>
                   <div className='mt-1 flex gap-4 py-1'>
@@ -528,7 +528,7 @@ const VolunteerApplicationForm = () => {
                 />
 
                 <div>
-                  <label className='text-sm font-medium text-black/80'>
+                  <label className='text-sm font-medium'>
                     Do you have any medical conditions or physical limitations
                     we should be aware of?
                   </label>
@@ -581,7 +581,7 @@ const VolunteerApplicationForm = () => {
                 />
 
                 <div>
-                  <label className='text-sm font-medium text-black/80'>
+                  <label className='text-sm font-medium'>
                     T-Shirt Size (for volunteer apparel, if applicable)
                   </label>
                   <div className='mt-1 flex flex-col gap-4 py-1'>
@@ -619,7 +619,7 @@ const VolunteerApplicationForm = () => {
                 </div>
               </fieldset>
 
-              <div className='pb-2 text-center text-[12px] text-black/60'>
+              <div className='pb-2 text-center text-[12px]'>
                 <div className='flex items-start'>
                   <input
                     className='h-4'
@@ -628,9 +628,9 @@ const VolunteerApplicationForm = () => {
                     id='consent'
                     value='acknowledged'
                     checked={consent}
-                    onClick={(e) => setConsent(e.target.checked)}
+                    onChange={(e) => setConsent(e.target.checked)}
                   />
-                  <label htmlFor='consent'>
+                  <label htmlFor='consent' className='text-sm text-white'>
                     By submitting this application, I confirm that the
                     information provided is accurate. I understand that
                     volunteering requires commitment and that I will be expected
@@ -638,11 +638,11 @@ const VolunteerApplicationForm = () => {
                   </label>
                 </div>
 
-                <div className='mt-3 flex justify-between'>
+                <div className='mt-5 flex justify-between'>
                   <button
                     type='submit'
                     disabled={!consent || isSubmitting}
-                    className='rounded-md bg-fuchsia-600 px-6 py-2 text-sm text-white hover:bg-fuchsia-500 disabled:bg-gray-400/50'
+                    className='rounded-md bg-[#6f1455] px-6 py-2 text-sm text-white hover:bg-[#6f1455]/50 disabled:bg-gray-700/40 disabled:text-gray-500'
                   >
                     {isSubmitting ? 'Submitting...' : 'Submit'}
                   </button>
@@ -650,7 +650,7 @@ const VolunteerApplicationForm = () => {
                   <button
                     type='reset'
                     disabled={isSubmitting}
-                    className='rounded-md px-2 text-sm font-medium text-fuchsia-700 hover:bg-fuchsia-200/50 disabled:text-gray-400/50'
+                    className='rounded-md px-2 text-sm font-medium text-[#e763c2] hover:bg-[#43152c] disabled:text-gray-500'
                   >
                     Clear form
                   </button>
@@ -661,13 +661,13 @@ const VolunteerApplicationForm = () => {
         </Formik>
       </main>
 
-      <div className='py-4 text-center text-[12px] text-black/60'>
+      <div className='py-4 text-center text-[12px] text-white/70'>
         Thank you for your support—we look forward to working with you! 🌟
       </div>
 
       <footer>
-        <div className='text-center text-xl font-bold text-black/50'>
-          The Voice
+        <div className='text-center text-xl font-bold text-white/70'>
+          Inspired Voices
         </div>
       </footer>
     </div>

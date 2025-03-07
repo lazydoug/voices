@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { Formik, Form } from 'formik'
 
 import { formAction } from '@/form-actions/nomination'
@@ -9,14 +9,20 @@ import { validationSchema } from '@/helpers/validation schemas/nomination'
 import FormField from '@/components/FormField'
 import LongTextInput from '@/components/LongTextInput'
 
+
+// export const metadata = {
+//   title: 'Voices',
+//   description: 'Nominate your Voices',
+// }
+
 export default function Home() {
   const [consent, setConsent] = useState(false)
 
   return (
-    <div className='mx-auto mb-6 mt-3 w-[640px] min-w-96 max-w-[90vw]'>
+    <div className='mx-auto mb-6 mt-3 w-[640px] min-w-96 max-w-[90vw] text-black'>
       <div className='h-40 max-h-[22.5vw] rounded-lg bg-[url("/img/the-voice-banner.jpg")] bg-cover bg-center'></div>
       <main>
-        <div className='mt-3 space-y-3 rounded-lg border-t-[10px] border-[#ff85dc] bg-white px-6 py-4 text-black'>
+        <div className='mt-3 space-y-3 rounded-lg border-t-[10px] border-[#ff85dc] bg-white px-6 py-4'>
           <h1 className='text-3xl font-bold'>
             Nomination for Perseverance & Strength Award
           </h1>
@@ -78,11 +84,6 @@ export default function Home() {
             try {
               const response = await formAction(formData) // Send form data to server
 
-              // const response = await fetch('/api/nomination', {
-              //   method: 'POST',
-              //   body: formData, // Stream the file directly
-              // })
-
               if (!response.success) {
                 // TODO: Handle Error
               } else {
@@ -124,9 +125,7 @@ export default function Home() {
                 />
 
                 <div>
-                  <label className='text-sm font-medium text-black/80'>
-                    Type of Nominee
-                  </label>
+                  <label className='text-sm font-medium'>Type of Nominee</label>
                   <div className='mt-1 flex gap-4 py-1'>
                     {['Individual', 'Organization'].map((type) => (
                       <label
@@ -307,10 +306,7 @@ export default function Home() {
                 />
 
                 <div>
-                  <label
-                    htmlFor='documents'
-                    className='text-sm font-medium text-black/80'
-                  >
+                  <label htmlFor='documents' className='text-sm font-medium'>
                     Supporting Documents: (Attach any relevant articles, photos,
                     videos, or references that support the nominee&apos;s
                     story.)
@@ -337,7 +333,7 @@ export default function Home() {
                 </div>
               </fieldset>
 
-              <div className='pb-2 text-center text-[12px] text-black/60'>
+              <div className='pb-2 text-center text-[12px]'>
                 <div className='flex items-start gap-1'>
                   <input
                     className='h-4'
@@ -355,7 +351,7 @@ export default function Home() {
                   </label>
                 </div>
 
-                <div className='mt-3 flex justify-between'>
+                <div className='mt-5 flex justify-between'>
                   <button
                     type='submit'
                     disabled={!consent || isSubmitting}
@@ -385,7 +381,7 @@ export default function Home() {
 
       <footer>
         <div className='text-center text-xl font-bold text-white/70'>
-          Voices
+          Inspired Voices
         </div>
       </footer>
     </div>

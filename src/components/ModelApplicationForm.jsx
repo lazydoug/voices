@@ -13,13 +13,13 @@ const ModelApplicationForm = () => {
   const [consent, setConsent] = useState(false)
 
   return (
-    <div className='mx-auto mb-6 mt-3 w-[640px] min-w-96 max-w-[90vw]'>
+    <div className='mx-auto mb-6 mt-3 w-[640px] min-w-96 max-w-[90vw] text-black'>
       <div className='h-40 max-h-[22.5vw] rounded-lg bg-[url("/img/model-banner.jpg")] bg-cover bg-center'></div>
       <main>
-        <div className='mt-3 space-y-3 rounded-lg border-t-[10px] border-fuchsia-300 bg-white px-6 pb-7 pt-4 text-black'>
-          <h1 className='text-3xl font-bold'>The Voice Model Application</h1>
+        <div className='mt-3 space-y-3 rounded-lg border-t-[10px] border-fuchsia-300 bg-white px-6 pb-7 pt-4'>
+          <h1 className='text-3xl font-bold'>Inspired Voices Model Application</h1>
           <p className='text-[14px] text-[#202124]'>
-            Thank you for your interest in modeling for The Voice event on{' '}
+            Thank you for your interest in modeling for the Inspired Voices event on{' '}
             <time dateTime='2025-05-18'>May 18, 2025</time>. Please complete the
             application below. Selected models will be contacted with further
             details.
@@ -186,7 +186,7 @@ const ModelApplicationForm = () => {
                 <legend>Modelling Experience</legend>
 
                 <div>
-                  <label className='text-sm font-medium text-black/80'>
+                  <label className='text-sm font-medium'>
                     Have you modeled before?
                   </label>
                   <div className='mt-1 flex gap-4 py-1'>
@@ -236,7 +236,7 @@ const ModelApplicationForm = () => {
                 />
 
                 <div>
-                  <label className='text-sm font-medium text-black/80'>
+                  <label className='text-sm font-medium'>
                     Do you have runway experience?
                   </label>
                   <div className='mt-1 flex gap-4 py-1'>
@@ -273,7 +273,7 @@ const ModelApplicationForm = () => {
                 </div>
 
                 <div>
-                  <label className='text-sm font-medium text-black/80'>
+                  <label className='text-sm font-medium'>
                     Are you comfortable wearing various styles, including
                     cultural or themed outfits?
                   </label>
@@ -313,7 +313,7 @@ const ModelApplicationForm = () => {
                 </div>
 
                 <div>
-                  <label className='text-sm font-medium text-black/80'>
+                  <label className='text-sm font-medium'>
                     Are you available for fittings on February 22nd or 23rd?
                   </label>
                   <div className='mt-1 flex gap-4 py-1'>
@@ -384,9 +384,7 @@ const ModelApplicationForm = () => {
                 />
 
                 <div>
-                  <label className='text-sm font-medium text-black/80'>
-                    Dress Size
-                  </label>
+                  <label className='text-sm font-medium'>Dress Size</label>
 
                   <div className='mt-1 flex flex-col gap-4 py-1'>
                     {['S', 'M', 'L', 'XL', 'XXL'].map((type) => (
@@ -438,7 +436,7 @@ const ModelApplicationForm = () => {
               <fieldset className='space-y-6 rounded-lg border-l-4 border-l-white bg-white px-6 pb-8 transition-all duration-300 focus-within:border-l-fuchsia-300/50'>
                 <legend>Additional Information</legend>
                 <LongTextInput
-                  label='Why do you want to model for The Voice?'
+                  label='Why do you want to model for Inspired Voices?'
                   name='whyTheVoice'
                   value={values.whyTheVoice}
                   onChange={handleChange}
@@ -464,7 +462,7 @@ const ModelApplicationForm = () => {
                 />
 
                 <div>
-                  <label className='text-sm font-medium text-black/80'>
+                  <label className='text-sm font-medium'>
                     Would you be open to professional hair and makeup styling?
                   </label>
                   <div className='mt-1 flex gap-4 py-1'>
@@ -516,10 +514,7 @@ const ModelApplicationForm = () => {
                 <legend>Photo Submission</legend>
 
                 <div>
-                  <label
-                    htmlFor='modelPhotos'
-                    className='text-sm font-medium text-black/80'
-                  >
+                  <label htmlFor='modelPhotos' className='text-sm font-medium'>
                     Please upload a recent full-body and headshot photo.
                     (Professional photos are not required, but clear images are
                     preferred.)
@@ -546,7 +541,7 @@ const ModelApplicationForm = () => {
                 </div>
               </fieldset>
 
-              <div className='pb-2 text-center text-[12px] text-black/60'>
+              <div className='pb-2 text-center text-[12px]'>
                 <div className='flex items-start gap-1'>
                   <input
                     className='h-4'
@@ -557,7 +552,7 @@ const ModelApplicationForm = () => {
                     checked={consent}
                     onChange={(e) => setConsent(e.target.checked)}
                   />
-                  <label htmlFor='consent'>
+                  <label htmlFor='consent' className='text-sm text-white'>
                     By submitting this application, I confirm that the
                     information provided is accurate. I understand that
                     participation requires availability for rehearsals,
@@ -565,11 +560,11 @@ const ModelApplicationForm = () => {
                   </label>
                 </div>
 
-                <div className='mt-3 flex justify-between'>
+                <div className='mt-5 flex justify-between'>
                   <button
                     type='submit'
                     disabled={!consent || isSubmitting}
-                    className='rounded-md bg-fuchsia-600 px-6 py-2 text-sm text-white hover:bg-fuchsia-500 disabled:bg-gray-400/50'
+                    className='rounded-md bg-[#6f1455] px-6 py-2 text-sm text-white hover:bg-[#6f1455]/50 disabled:bg-gray-700/40 disabled:text-gray-500'
                   >
                     {isSubmitting ? 'Submitting...' : 'Submit'}
                   </button>
@@ -577,7 +572,7 @@ const ModelApplicationForm = () => {
                   <button
                     type='reset'
                     disabled={isSubmitting}
-                    className='rounded-md px-2 text-sm font-medium text-fuchsia-700 hover:bg-fuchsia-200/50 disabled:text-gray-400/50'
+                    className='rounded-md px-2 text-sm font-medium text-[#e763c2] hover:bg-[#43152c] disabled:text-gray-500'
                   >
                     Clear form
                   </button>
@@ -588,14 +583,14 @@ const ModelApplicationForm = () => {
         </Formik>
       </main>
 
-      <div className='py-4 text-center text-[12px] text-black/60'>
+      <div className='py-4 text-center text-[12px] text-white/70'>
         Thank you for your interest — we look forward to seeing you on the
         runway! 🌟
       </div>
 
       <footer>
-        <div className='text-center text-xl font-bold text-black/50'>
-          The Voice
+        <div className='text-center text-xl font-bold text-white/70'>
+          Inspired Voices
         </div>
       </footer>
     </div>
