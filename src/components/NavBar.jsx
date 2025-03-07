@@ -24,7 +24,7 @@ const NavBar = () => {
               src='/assets/logo-purple.png'
               alt='Inspired Voices logo'
               width={70}
-              height={12}
+              height={42}
             />
           </Link>
         </div>
